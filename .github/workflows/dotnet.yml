@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
       with:
@@ -37,3 +39,11 @@ jobs:
       with:
         name: squirrel package
         path: '**/Releases/**/*'
+    - name: Release
+      if: ${{ github.ref_name == 'main' }}
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "DeployableApp/bin/Debug/Releases/*"
+        artifactErrorsFailBuild: true
+        commit: ${{ github.ref_name }}
+        tag: ${{ steps.nbgv.outputs.SemVer2 }}
