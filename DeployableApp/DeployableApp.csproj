@@ -7,10 +7,14 @@
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Leon van der Meer</Authors>
+    <Company></Company>
+    <Description>Deployable App</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="squirrel.windows" Version="2.0.1" />
+    <PackageReference Include="squirrel.windows" Version="2.0.1" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,5 +26,25 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <Target Name="GetMyPackageFiles" AfterTargets="Build">
+    <ItemGroup>
+      <None Include="$(TargetDir)\*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)DisableUpdates.txt;$(TargetPath)">
+        <Pack>True</Pack>
+        <PackagePath>\lib\net472</PackagePath>
+      </None>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="SquirrelReleasify"
+          AfterTargets="Pack"
+          Inputs="$(PackageOutputAbsolutePath)\$(PackageId).$(PackageVersion).nupkg"
+          Outputs="$(PackageOutputAbsolutePath)\Releases\RELEASES">
+    <Exec Command="$(SquirrelToolsPath)\Squirrel.exe --releasify $(PackageId).$(PackageVersion).nupkg"
+          WorkingDirectory="$(PackageOutputAbsolutePath)" />
+    <Move SourceFiles="$(PackageOutputAbsolutePath)\Releases\Setup.exe"
+          DestinationFiles="$(PackageOutputAbsolutePath)\Releases\DeployableAppSetup.exe"
+          OverwriteReadOnlyFiles="true" />
+  </Target>
 
 </Project>
