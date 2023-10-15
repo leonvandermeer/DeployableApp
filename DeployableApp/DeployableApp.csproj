@@ -36,15 +36,17 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="SquirrelReleasify"
-          AfterTargets="Pack"
-          Inputs="$(PackageOutputAbsolutePath)\$(PackageId).$(PackageVersion).nupkg"
-          Outputs="$(PackageOutputAbsolutePath)\Releases\RELEASES">
-    <Exec Command="$(SquirrelToolsPath)\Squirrel.exe --releasify $(PackageId).$(PackageVersion).nupkg"
-          WorkingDirectory="$(PackageOutputAbsolutePath)" />
+  <Target Name="SquirrelReleasify" AfterTargets="Pack" Inputs="$(PackageOutputAbsolutePath)\$(PackageId).$(PackageVersion).nupkg" Outputs="$(PackageOutputAbsolutePath)\Releases\RELEASES">
+    <PropertyGroup>
+      <SignTool>/p ""%25CERTIFICATEPASSWORD%25"" /a /f ..\..\..\Certificates\DeployableApp.pfx /fd sha256 /tr http://timestamp.digicert.com /td sha256</SignTool>
+    </PropertyGroup>
+    <Exec Command="$(SquirrelToolsPath)\Squirrel.exe -n &quot;$(SignTool)&quot; --releasify $(PackageId).$(PackageVersion).nupkg"
+          WorkingDirectory="$(PackageOutputAbsolutePath)"
+    />
     <Move SourceFiles="$(PackageOutputAbsolutePath)\Releases\Setup.exe"
           DestinationFiles="$(PackageOutputAbsolutePath)\Releases\DeployableAppSetup.exe"
-          OverwriteReadOnlyFiles="true" />
+          OverwriteReadOnlyFiles="true"
+    />
   </Target>
 
 </Project>
