@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeployableApp"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MyViewModel, IsDesignTimeCreatable=True}"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock Text="{x:Static local:MainWindow.AssemblyInformationalVersion}" />
-    </Grid>
+    <StackPanel>
+        <Label Content="Current Version" />
+        <TextBlock Text="{Binding AssemblyInformationalVersion, Mode=OneWay}" />
+        <Label Content="Update Result" />
+        <TextBlock Text="{Binding UpdateResult}" />
+        <Label Content="Exception" />
+        <TextBlock Text="{Binding Ex, Mode=OneWay}" />
+    </StackPanel>
 </Window>
