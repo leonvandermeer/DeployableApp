@@ -32,3 +32,8 @@ jobs:
       with:
         name: log
         path: '**/*.binlog'
+    - name: Upload Squirrel package
+      uses: actions/upload-artifact@v3
+      with:
+        name: squirrel package
+        path: '**/Releases/**/*'
