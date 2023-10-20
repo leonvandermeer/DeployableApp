@@ -3,6 +3,36 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{4A2887C3-6EA1-4E82-BA76-6F2DED4F8BE6}"
+	ProjectSection(SolutionItems) = preProject
+		.config\dotnet-tools.json = .config\dotnet-tools.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{F6936C1B-B94B-431C-92C7-5304BDAFBE98}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Certificates", "Certificates", "{F6E3698F-EB57-4BD1-88DA-8AFF81BC4FEB}"
+	ProjectSection(SolutionItems) = preProject
+		Certificates\Cleanup.ps1 = Certificates\Cleanup.ps1
+		Certificates\CreateCertificate.ps1 = Certificates\CreateCertificate.ps1
+		Certificates\DeployableApp.pfx = Certificates\DeployableApp.pfx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB21E38B-C049-4D2F-A458-BAC5234AE0D4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		LICENSE = LICENSE
+		README.md = README.md
+		version.json = version.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{0A14DA88-2EDA-4F1A-8B19-5B1FB8D64364}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeployableApp", "DeployableApp\DeployableApp.csproj", "{6ACA43AC-2356-4763-9D73-0D262F4CAB9A}"
 EndProject
 Global
@@ -18,5 +48,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0A14DA88-2EDA-4F1A-8B19-5B1FB8D64364} = {F6936C1B-B94B-431C-92C7-5304BDAFBE98}
+		{4A2887C3-6EA1-4E82-BA76-6F2DED4F8BE6} = {BB21E38B-C049-4D2F-A458-BAC5234AE0D4}
+		{F6936C1B-B94B-431C-92C7-5304BDAFBE98} = {BB21E38B-C049-4D2F-A458-BAC5234AE0D4}
+		{F6E3698F-EB57-4BD1-88DA-8AFF81BC4FEB} = {BB21E38B-C049-4D2F-A458-BAC5234AE0D4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18CD1199-4194-459C-B262-221AAD6F3D8B}
 	EndGlobalSection
 EndGlobal
