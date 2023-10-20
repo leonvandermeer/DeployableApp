@@ -36,7 +36,10 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="SquirrelReleasify" AfterTargets="Pack" Inputs="$(PackageOutputAbsolutePath)\$(PackageId).$(PackageVersion).nupkg" Outputs="$(PackageOutputAbsolutePath)\Releases\RELEASES">
+  <Target Name="SquirrelReleasify"
+          AfterTargets="Pack"
+          Inputs="$(PackageOutputAbsolutePath)\$(PackageId).$(PackageVersion).nupkg"
+          Outputs="$(PackageOutputAbsolutePath)\Releases\RELEASES">
     <PropertyGroup>
       <SignTool>/p ""%25CERTIFICATEPASSWORD%25"" /f ..\..\..\Certificates\DeployableApp.pfx /fd sha256 /tr http://timestamp.digicert.com /td sha256</SignTool>
     </PropertyGroup>
@@ -54,6 +57,9 @@
           DestinationFiles="$(PackageOutputAbsolutePath)\Releases\DeployableAppSetup.exe"
           OverwriteReadOnlyFiles="true"
           />
+    <Message Importance="High"
+             Text="SquirrelReleasify -> $([System.IO.Path]::GetFullPath('$(PackageOutputAbsolutePath)\Releases'))"
+             />
   </Target>
 
 </Project>
