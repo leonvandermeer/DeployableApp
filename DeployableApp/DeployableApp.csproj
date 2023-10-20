@@ -31,26 +31,29 @@
     <ItemGroup>
       <None Include="$(TargetDir)\*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)DisableUpdates.txt;$(TargetPath)">
         <Pack>True</Pack>
-        <PackagePath>\lib\net472</PackagePath>
+        <PackagePath>\lib\$(TargetFramework)</PackagePath>
       </None>
     </ItemGroup>
   </Target>
 
   <Target Name="SquirrelReleasify" AfterTargets="Pack" Inputs="$(PackageOutputAbsolutePath)\$(PackageId).$(PackageVersion).nupkg" Outputs="$(PackageOutputAbsolutePath)\Releases\RELEASES">
     <PropertyGroup>
-      <SignTool>/p ""%25CERTIFICATEPASSWORD%25"" /a /f ..\..\..\Certificates\DeployableApp.pfx /fd sha256 /tr http://timestamp.digicert.com /td sha256</SignTool>
+      <SignTool>/p ""%25CERTIFICATEPASSWORD%25"" /f ..\..\..\Certificates\DeployableApp.pfx /fd sha256 /tr http://timestamp.digicert.com /td sha256</SignTool>
     </PropertyGroup>
     <Exec Command="if &quot;%25CERTIFICATEPASSWORD%25&quot; equ &quot;&quot; exit 5" IgnoreExitCode="true" ConsoleToMSBuild="true">
-      <Output TaskParameter="ExitCode" PropertyName="_VCVarsAllFound" />
+      <Output TaskParameter="ExitCode" PropertyName="PasswordFound" />
     </Exec>
-    <Error Condition="'$(_VCVarsAllFound)' != '0'" Text="Cannot sign Installer files. Please set the CERTIFICATEPASSWORD environment variable to access the Certificate's private key." />
+    <Error Condition="'$(PasswordFound)' != '0'"
+           Text="Cannot sign Installer files. Please set the CERTIFICATEPASSWORD environment variable to access the Certificate's private key."
+           />
     <Exec Command="$(SquirrelToolsPath)\Squirrel.exe -n &quot;$(SignTool)&quot; --releasify $(PackageId).$(PackageVersion).nupkg"
           WorkingDirectory="$(PackageOutputAbsolutePath)"
-    />
+          />
+    <Delete Files="$(SquirrelToolsPath)\Squirrel-Releasify.log" />
     <Move SourceFiles="$(PackageOutputAbsolutePath)\Releases\Setup.exe"
           DestinationFiles="$(PackageOutputAbsolutePath)\Releases\DeployableAppSetup.exe"
           OverwriteReadOnlyFiles="true"
-    />
+          />
   </Target>
 
 </Project>
