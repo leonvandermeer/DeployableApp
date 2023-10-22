@@ -21,9 +21,11 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore -bl:restore.binlog
     - name: Build
+      run: dotnet build -c Release --no-restore -bl:build.binlog
+    - name: Publish
       env:
         CERTIFICATEPASSWORD: ${{ secrets.CERTIFICATEPASSWORD }}
-      run: dotnet build -c Release --no-restore -bl:build.binlog
+      run: dotnet publish -c Release --sc -bl:publish.binlog
     - name: Test
       run: dotnet test -c Release --no-build --verbosity normal
     - name: Show Version

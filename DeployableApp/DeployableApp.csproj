@@ -2,19 +2,14 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
-    <LangVersion>latest</LangVersion>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Authors>Leon van der Meer</Authors>
-    <Company></Company>
-    <Description>Deployable App</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="squirrel.windows" Version="2.0.1" PrivateAssets="all" />
+    <PackageReference Include="squirrel.windows" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,42 +19,8 @@
   <ItemGroup>
     <None Update="DisableUpdates.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
-
-  <Target Name="GetMyPackageFiles" AfterTargets="Build">
-    <ItemGroup>
-      <None Include="$(TargetDir)\*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)DisableUpdates.txt;$(TargetPath)">
-        <Pack>True</Pack>
-        <PackagePath>\lib\$(TargetFramework)</PackagePath>
-      </None>
-    </ItemGroup>
-  </Target>
-
-  <Target Name="SquirrelReleasify"
-          AfterTargets="Pack"
-          Inputs="$(PackageOutputAbsolutePath)\$(PackageId).$(PackageVersion).nupkg"
-          Outputs="$(PackageOutputAbsolutePath)\Releases\RELEASES">
-    <PropertyGroup>
-      <SignTool>/p ""%25CERTIFICATEPASSWORD%25"" /f ..\..\..\Certificates\DeployableApp.pfx /fd sha256 /tr http://timestamp.digicert.com /td sha256</SignTool>
-    </PropertyGroup>
-    <Exec Command="if &quot;%25CERTIFICATEPASSWORD%25&quot; equ &quot;&quot; exit 5" IgnoreExitCode="true" ConsoleToMSBuild="true">
-      <Output TaskParameter="ExitCode" PropertyName="PasswordFound" />
-    </Exec>
-    <Error Condition="'$(PasswordFound)' != '0'"
-           Text="Cannot sign Installer files. Please set the CERTIFICATEPASSWORD environment variable to access the Certificate's private key."
-           />
-    <Exec Command="$(SquirrelToolsPath)\Squirrel.exe -n &quot;$(SignTool)&quot; --releasify $(PackageId).$(PackageVersion).nupkg"
-          WorkingDirectory="$(PackageOutputAbsolutePath)"
-          />
-    <Delete Files="$(SquirrelToolsPath)\Squirrel-Releasify.log" />
-    <Move SourceFiles="$(PackageOutputAbsolutePath)\Releases\Setup.exe"
-          DestinationFiles="$(PackageOutputAbsolutePath)\Releases\DeployableAppSetup.exe"
-          OverwriteReadOnlyFiles="true"
-          />
-    <Message Importance="High"
-             Text="SquirrelReleasify -> $([System.IO.Path]::GetFullPath('$(PackageOutputAbsolutePath)\Releases'))"
-             />
-  </Target>
 
 </Project>
