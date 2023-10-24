@@ -18,14 +18,10 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore -bl:restore.binlog
-    - name: Build
-      run: dotnet build -c Release --no-restore -bl:build.binlog
-    - name: Publish
+    - name: Restore, Build, Publish
       env:
         CERTIFICATEPASSWORD: ${{ secrets.CERTIFICATEPASSWORD }}
-      run: dotnet publish -c Release --sc -bl:publish.binlog
+      run: dotnet publish -c Release --sc -bl:build.binlog
     - name: Test
       run: dotnet test -c Release --no-build --verbosity normal
     - name: Show Version
@@ -47,7 +43,7 @@ jobs:
       if: ${{ github.ref_name == 'main' }}
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "DeployableApp/bin/*/Releases/*"
+        artifacts: "DeployableApp.Publish/bin/*/Releases/*"
         artifactErrorsFailBuild: true
         commit: ${{ github.ref_name }}
         tag: ${{ steps.nbgv.outputs.SemVer2 }}
