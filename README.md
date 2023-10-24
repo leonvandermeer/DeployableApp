@@ -1,2 +1,2 @@
 # DeployableApp
-Repository to experiment with Ci/CD automatic deployment of new versions
+Repository to experiment with CI/CD automatic deployment of new versions
