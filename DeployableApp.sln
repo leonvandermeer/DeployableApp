@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
 		LICENSE = LICENSE
+		nuget.config = nuget.config
 		README.md = README.md
 		version.json = version.json
 	EndProjectSection
@@ -56,10 +57,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0A14DA88-2EDA-4F1A-8B19-5B1FB8D64364} = {F6936C1B-B94B-431C-92C7-5304BDAFBE98}
 		{4A2887C3-6EA1-4E82-BA76-6F2DED4F8BE6} = {BB21E38B-C049-4D2F-A458-BAC5234AE0D4}
 		{F6936C1B-B94B-431C-92C7-5304BDAFBE98} = {BB21E38B-C049-4D2F-A458-BAC5234AE0D4}
 		{F6E3698F-EB57-4BD1-88DA-8AFF81BC4FEB} = {BB21E38B-C049-4D2F-A458-BAC5234AE0D4}
+		{0A14DA88-2EDA-4F1A-8B19-5B1FB8D64364} = {F6936C1B-B94B-431C-92C7-5304BDAFBE98}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {18CD1199-4194-459C-B262-221AAD6F3D8B}
