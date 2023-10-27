@@ -1,6 +1,4 @@
-﻿using NuGet;
-using Squirrel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 
@@ -23,28 +21,16 @@ class MyViewModel : INotifyPropertyChanged {
         }
     }
 
-    private async Task DoUpdateAsync() {
+    private Task DoUpdateAsync() {
         string disableUpdatesFile = Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
             "DisableUpdates.txt"
         );
         if (File.Exists(disableUpdatesFile)) {
             UpdateResult = "Updates are disabled.";
-            return;
+            return Task.CompletedTask;
         }
-
-        using UpdateManager updateManager = await UpdateManager.GitHubUpdateManager(repoUrl);
-        SemanticVersion currentVersion = updateManager.CurrentlyInstalledVersion();
-        UpdateResult = $"Current version: {currentVersion}. Updating...";
-
-        ReleaseEntry r = await updateManager.UpdateApp();
-        if (r == null || r.Version == currentVersion) {
-            UpdateResult = $"You have the latest version: {currentVersion}";
-        } else if (r.Version > currentVersion) {
-            UpdateResult = $"After restarting you will be running version {r.Version}.";
-        } else {
-            UpdateResult = $"You're running version {currentVersion} which is newer than the latest {r.Version}.";
-        }
+        throw new NotImplementedException();
     }
 
     public string AssemblyInformationalVersion { get; } = ThisAssembly.AssemblyInformationalVersion;

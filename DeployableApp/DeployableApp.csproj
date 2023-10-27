@@ -7,10 +7,22 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Product>Deployable Application</Product>
+    <PackageProjectUrl>https://github.com/leonvandermeer/DeployableApp#deployableapp</PackageProjectUrl>
+    <Company>Leon van der Meer</Company>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="squirrel.windows" Version="2.0.1" />
+  <PropertyGroup>
+    <DevelpmentMode Condition="'$(DevelpmentMode)' == ''">true</DevelpmentMode>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(DevelpmentMode)' == 'false'">
+    <PackageReference Include="InnoSetup.Tasks" Version="1.0.*-beta-*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(DevelpmentMode)' == 'true'">
+    <ProjectReference Include="..\InnoSetup.Tasks\InnoSetup.Tasks.csproj" PrivateAssets="all" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,5 +35,13 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
+
+  <Target Name="RestoreProjectImports"
+          AfterTargets="CollectPackageReferences"
+          Condition="'$(DevelpmentMode)' == 'true'">
+    <Copy SourceFiles="DeployableApp.csproj.development.props;DeployableApp.csproj.development.targets"
+          DestinationFolder="$(MSBuildProjectExtensionsPath)"
+          SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>

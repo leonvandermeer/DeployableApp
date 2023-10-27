@@ -1,0 +1,51 @@
+<Project>
+  <PropertyGroup>
+    <InnoSetupBuildTasksAssembly Condition="Exists('$(MSBuildThisFileDirectory)..\lib\netstandard2.0\InnoSetup.Tasks.dll')">$(MSBuildThisFileDirectory)..\lib\netstandard2.0\InnoSetup.Tasks.dll</InnoSetupBuildTasksAssembly>
+    <InnoSetupBuildTasksAssembly Condition="'$(InnoSetupBuildTasksAssembly)'==''">$(MSBuildThisFileDirectory)..\bin\$(Configuration)\netstandard2.0\InnoSetup.Tasks.dll</InnoSetupBuildTasksAssembly>
+    <CompilerScript>$(IntermediateOutputPath)$(AssemblyName).g.iss</CompilerScript>
+    <InstallerDirName Condition="'$(InstallerDirName)' == ''">installer</InstallerDirName>
+    <InstallerDir Condition="'$(InstallerDir)' == '' and
+                             '$(AppendRuntimeIdentifierToOutputPath)' != 'true' and
+                             '$(RuntimeIdentifier)' != ''">$(OutputPath)$(RuntimeIdentifier)\$(InstallerDirName)\</InstallerDir>
+    <InstallerDir Condition="'$(InstallerDir)' == ''">$(OutputPath)$(InstallerDirName)\</InstallerDir>
+  </PropertyGroup>
+
+  <UsingTask TaskName="InnoSetup.Tasks.InnoSetup" AssemblyFile="$(InnoSetupBuildTasksAssembly)" />
+  <UsingTask TaskName="InnoSetup.Tasks.CreateInnoSetup" AssemblyFile="$(InnoSetupBuildTasksAssembly)" />
+
+  <ItemGroup Condition="'$(BuildingInsideVisualStudio)'=='true'">
+    <AvailableItemName Include="InnoSetupCompilerScript" />
+  </ItemGroup>
+
+  <Target Name="CreateInnoSetup" BeforeTargets="InnoSetup">
+    <CreateInnoSetup PublishItems="@(PublishItemsOutputGroupOutputs)"
+                     CompilerScript="$(CompilerScript)"
+                     />
+  </Target>
+
+  <Target Name="InnoSetup" BeforeTargets="Install">
+    <PropertyGroup>
+      <InstallerName>$(PackageId).$(PackageVersion).Setup.exe</InstallerName>
+    </PropertyGroup>
+    <ItemGroup>
+      <AppExeName Include="%(PublishItemsOutputGroupOutputs.RelativePath)"
+                  Condition="'%(PublishItemsOutputGroupOutputs.IsKeyOutput)' == 'True'"
+                  />
+    </ItemGroup>
+    <InnoSetup CompilerScript="@(InnoSetupCompilerScript)"
+               Includes="$(CompilerScript)"
+               AppName="$(Product)"
+               AppVersion="$(InformationalVersion)"
+               VersionInfoVersion="$(FileVersion)"
+               AppPublisher="$(Company)"
+               AppURL="$(PackageProjectUrl)"
+               AppExeName="@(AppExeName)"
+               OutputDir="$(InstallerDir)"
+               OutputBaseFilename="$([System.IO.Path]::GetFileNameWithoutExtension('$(InstallerName)'))"
+               />
+  </Target>
+
+  <Target Name="Install" AfterTargets="Publish">
+    <Message Importance="High" Text="$(MSBuildProjectName) -> $([System.IO.Path]::GetFullPath('$(InstallerDir)'))" />
+  </Target>
+</Project>

@@ -1,0 +1,5 @@
+﻿<Project>
+  <ImportGroup>
+    <Import Project="$(MSBuildThisFileDirectory)..\..\InnoSetup.Tasks\build\InnoSetup.Tasks.props" />
+  </ImportGroup>
+</Project>

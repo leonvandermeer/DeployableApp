@@ -47,16 +47,16 @@ jobs:
       with:
         name: log
         path: '**/*.binlog'
-    - name: Upload Squirrel package
+    - name: Upload Installer
       uses: actions/upload-artifact@v3
       with:
-        name: squirrel package
-        path: '**/Releases/**/*'
+        name: installer
+        path: '**/installer/**/*'
     - name: Release
       if: ${{ github.ref_name == 'main' || startsWith(github.ref_name, 'v') }}
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "DeployableApp.Publish/bin/*/Releases/*"
+        artifacts: 'DeployableApp/bin/**/installer/**/*'
         artifactErrorsFailBuild: true
         commit: ${{ github.ref_name }}
         tag: ${{ steps.nbgv.outputs.SemVer2 }}

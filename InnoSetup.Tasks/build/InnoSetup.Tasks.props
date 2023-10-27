@@ -1,0 +1,10 @@
+<Project>
+
+  <ItemGroup>
+    <InnoSetupCompilerScript Condition=" '$(EnableDefaultItems)' == 'true' "
+                             Include="**/*.iss"
+                             Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)"
+                             />
+  </ItemGroup>
+
+</Project>
