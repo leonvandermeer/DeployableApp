@@ -26,6 +26,12 @@
           "System.Threading.Tasks.Dataflow": "7.0.0"
         }
       },
+      "Microsoft.Windows.SDK.BuildTools": {
+        "type": "Direct",
+        "requested": "[10.0.22621.2428, )",
+        "resolved": "10.0.22621.2428",
+        "contentHash": "qCNAxtpkIvn/mTXLoj5uW80qPyPvNcnTPTLgm2U+d53LS75DT6iQSpLnkVYCvxuRLx4FYPAcKackwpc0cDZGUg=="
+      },
       "Nerdbank.GitVersioning": {
         "type": "Direct",
         "requested": "[3.6.133, )",

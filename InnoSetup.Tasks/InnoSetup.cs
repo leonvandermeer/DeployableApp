@@ -40,6 +40,12 @@ public class InnoSetup : ToolTask {
     [Required]
     public ITaskItem? OutputBaseFilename { get; set; }
 
+    [Required]
+    public ITaskItem? SignTool { get; set; }
+
+    [Required]
+    public ITaskItem? CertificateThumbprint { get; set; }
+
     public InnoSetup() {
 #if DEBUGTHISTASK
         Debugger.Launch();
@@ -77,6 +83,8 @@ public class InnoSetup : ToolTask {
         commandLine.AppendSwitchIfNotNull("/D", $"MyAppExeName={AppExeName!.ItemSpec}");
         commandLine.AppendSwitchIfNotNull("/O", OutputDir);
         commandLine.AppendSwitchIfNotNull("/F", OutputBaseFilename);
+        string cmd = $"{SignTool!.ItemSpec} sign /sha1 {CertificateThumbprint!.ItemSpec} /fd sha256 /tr http://timestamp.digicert.com /td sha256 $f";
+        commandLine.AppendSwitchIfNotNull("/S", $"innosetup.tasks={cmd}");
         commandLine.AppendFileNameIfNotNull(CompilerScript);
     }
 

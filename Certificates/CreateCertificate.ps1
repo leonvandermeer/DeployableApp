@@ -2,6 +2,9 @@
 # https://oidref.com/2.5.29.37 Certificate extension: "extKeyUsage" (Extended key usage)
 # https://oidref.com/1.3.6.1.5.5.7.3.3 Indicates that a certificate can be used for code signing
 
+# Import-PfxCertificate .\DeployableApp.pfx Cert:\CurrentUser\My -Password (ConvertTo-SecureString $env:CERTIFICATEPASSWORD -AsPlainText -Force)
+# dir -Recurse -Force Cert:\ -Include 8BEDD2041F652587AF7F26A70A6B0CC83BC8AE8F, 244E9E97D19E462B62735D2C67A7024BFC559E33
+
 pushd $PSScriptRoot
 try {
     if (![Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {

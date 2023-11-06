@@ -10,6 +10,7 @@
     <Product>Deployable Application</Product>
     <PackageProjectUrl>https://github.com/leonvandermeer/DeployableApp#deployableapp</PackageProjectUrl>
     <Company>Leon van der Meer</Company>
+    <InstallerCertificateThumbprint>8BEDD2041F652587AF7F26A70A6B0CC83BC8AE8F</InstallerCertificateThumbprint>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -1,5 +1,9 @@
 ﻿<Project>
+  <PropertyGroup>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+  </PropertyGroup>
   <ImportGroup>
+    <Import Project="$(NuGetPackageRoot)microsoft.windows.sdk.buildtools\10.0.22621.2428\buildTransitive\Microsoft.Windows.SDK.BuildTools.props" />
     <Import Project="$(MSBuildThisFileDirectory)..\..\InnoSetup.Tasks\build\InnoSetup.Tasks.props" />
   </ImportGroup>
 </Project>

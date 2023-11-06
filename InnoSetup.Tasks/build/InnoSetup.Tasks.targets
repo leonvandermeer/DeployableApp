@@ -42,6 +42,8 @@
                AppExeName="@(AppExeName)"
                OutputDir="$(InstallerDir)"
                OutputBaseFilename="$([System.IO.Path]::GetFileNameWithoutExtension('$(InstallerName)'))"
+               SignTool="$(SignAppxPackageExeFullPath)"
+               CertificateThumbprint="$(InstallerCertificateThumbprint)"
                />
   </Target>
 

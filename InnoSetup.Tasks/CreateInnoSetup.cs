@@ -33,6 +33,7 @@ public class CreateInnoSetup : Task {
         script.WriteLine("VersionInfoTextVersion={#MyAppVersion}");
         script.WriteLine("AppVersion={#MyAppVersion}");
         script.WriteLine(";AppVerName={#MyAppName} {#MyAppVersion}");
+        script.WriteLine("SignTool=innosetup.tasks");
     }
 
     private void FilesSection(TextWriter script) {
