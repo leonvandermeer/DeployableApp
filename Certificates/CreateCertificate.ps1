@@ -29,6 +29,10 @@ try {
     $caCertificate = move $caCertificate.PSPath Cert:\LocalMachine\Root -PassThru
 
     Export-PfxCertificate $cert DeployableApp.pfx -Password $password -ChainOption BuildChain
+
+    $bytes = cat DeployableApp.pfx -Encoding Byte -Raw
+    $encoded = [Convert]::ToBase64String($bytes)
+    $encoded | Out-File DeployableApp.pfx.txt -Encoding utf8
 } finally {
     popd
 }
