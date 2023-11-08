@@ -24,7 +24,7 @@ class MyViewModel : INotifyPropertyChanged {
     }
 
     private async Task DoUpdateAsync() {
-        var disableUpdatesFile = Path.Combine(
+        string disableUpdatesFile = Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
             "DisableUpdates.txt"
         );
