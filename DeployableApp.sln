@@ -14,7 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Certificates", "Certificate
 	ProjectSection(SolutionItems) = preProject
 		Certificates\Cleanup.ps1 = Certificates\Cleanup.ps1
 		Certificates\CreateCertificate.ps1 = Certificates\CreateCertificate.ps1
-		Certificates\DeployableApp.pfx = Certificates\DeployableApp.pfx
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB21E38B-C049-4D2F-A458-BAC5234AE0D4}"
