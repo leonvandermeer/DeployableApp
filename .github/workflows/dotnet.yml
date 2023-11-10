@@ -14,17 +14,19 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
-    - name: Write key file
+    - name: Import Code Signing Certificate
       env:
         CERTIFICATE: ${{ secrets.CERTIFICATE }}
-      run: Set-Content Certificates\DeployableApp.pfx ([Convert]::FromBase64String($env:CERTIFICATE)) -AsByteStream
-    - name: Restore, Build, Publish
-      env:
         CERTIFICATEPASSWORD: ${{ secrets.CERTIFICATEPASSWORD }}
+      run: |
+        Set-Content DeployableApp.pfx ([Convert]::FromBase64String($env:CERTIFICATE)) -AsByteStream
+        Import-PfxCertificate DeployableApp.pfx Cert:\CurrentUser\My -Password (ConvertTo-SecureString $env:CERTIFICATEPASSWORD -AsPlainText -Force)
+        del DeployableApp.pfx
+    - name: Restore, Build, Publish
       run: dotnet publish -c Release --sc -bl:build.binlog
-    - name: Delete key file
+    - name: Delete Code Signing Certificate
       if: ${{ always() }}
-      run: del Certificates\DeployableApp.pfx
+      run: dir -Recurse -Force Cert:\ -Include 8BEDD2041F652587AF7F26A70A6B0CC83BC8AE8F, 244E9E97D19E462B62735D2C67A7024BFC559E33 | del -Verbose
     - name: Test
       run: dotnet test -c Release --no-build --verbosity normal
     - name: Show Version

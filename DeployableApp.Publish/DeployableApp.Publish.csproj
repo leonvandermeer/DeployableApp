@@ -35,14 +35,8 @@
           Inputs="$(PackageOutputAbsolutePath)\$(PackageId).$(PackageVersion).nupkg"
           Outputs="$(PackageOutputAbsolutePath)\Releases\RELEASES">
     <PropertyGroup>
-      <SignTool>/p ""%25CERTIFICATEPASSWORD%25"" /f ..\..\..\Certificates\DeployableApp.pfx /fd sha256 /tr http://timestamp.digicert.com /td sha256</SignTool>
+      <SignTool>/sha1 8BEDD2041F652587AF7F26A70A6B0CC83BC8AE8F /fd sha256 /tr http://timestamp.digicert.com /td sha256</SignTool>
     </PropertyGroup>
-    <Exec Command="if &quot;%25CERTIFICATEPASSWORD%25&quot; equ &quot;&quot; exit 5" IgnoreExitCode="true" ConsoleToMSBuild="true">
-      <Output TaskParameter="ExitCode" PropertyName="PasswordFound" />
-    </Exec>
-    <Error Condition="'$(PasswordFound)' != '0'"
-           Text="Cannot sign Installer files. Please set the CERTIFICATEPASSWORD environment variable to access the Certificate's private key."
-           />
     <Exec Command="$(SquirrelToolsPath)\Squirrel.exe -n &quot;$(SignTool)&quot; --releasify $(PackageId).$(PackageVersion).nupkg"
           WorkingDirectory="$(PackageOutputAbsolutePath)"
           />
