@@ -12,6 +12,7 @@
 
   <UsingTask TaskName="InnoSetup.Tasks.InnoSetup" AssemblyFile="$(InnoSetupBuildTasksAssembly)" />
   <UsingTask TaskName="InnoSetup.Tasks.CreateInnoSetup" AssemblyFile="$(InnoSetupBuildTasksAssembly)" />
+  <UsingTask TaskName="InnoSetup.Tasks.CreateManifest" AssemblyFile="$(InnoSetupBuildTasksAssembly)" />
 
   <ItemGroup Condition="'$(BuildingInsideVisualStudio)'=='true'">
     <AvailableItemName Include="InnoSetupCompilerScript" />
@@ -45,6 +46,10 @@
                SignTool="$(SignAppxPackageExeFullPath)"
                CertificateThumbprint="$(InstallerCertificateThumbprint)"
                />
+    <CreateManifest Installer="$(InstallerName)"
+                    OutputDir="$(InstallerDir)"
+                    Version="$(PackageVersion)"
+                    />
   </Target>
 
   <Target Name="Install" AfterTargets="Publish">
