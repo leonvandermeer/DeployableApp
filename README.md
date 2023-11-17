@@ -46,12 +46,12 @@ Simple and effective. GitHub's CI/CD do all the work on standard GitHub GitHub-h
 # Findings
 
 <details><summary>Squirrel</summary>
-  
-* No .NET (Core) support
-** Squirrel always installs .net framework runtime, this is not needed for .net core.
-** Shortcut created for createdump.exe - an executable as part of .net runtime, as part of self contained installation
-** I only got code compiling / working against a development version of Squirrel's nuget package (taken from https://github.com/Squirrel/Squirrel.Windows/tree/5e44cb4001a7d48f53ee524a2d90b3f5700a9920).
-  
+
+* No .NET Core support
+  * Squirrel always installs .net framework runtime, this is not needed for .net core and cannot be disabled.
+  * Shortcut created for `createdump.exe` - an executable as part of .net runtime, as part of self contained installation.
+* I only got code compiling / working against a development version of Squirrel's nuget package (taken from https://github.com/Squirrel/Squirrel.Windows/tree/5e44cb4001a7d48f53ee524a2d90b3f5700a9920).
+
 </details>
 
 <details><summary>Code Signing and Certificates</summary>
