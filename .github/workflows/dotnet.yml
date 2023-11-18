@@ -53,10 +53,11 @@ jobs:
         name: squirrel package
         path: '**/Releases/**/*'
     - name: Release
-      if: ${{ github.ref_name == 'main' }}
+      if: ${{ github.ref_name == 'main' || startsWith(github.ref_name, 'v') }}
       uses: ncipollo/release-action@v1
       with:
         artifacts: "DeployableApp.Publish/bin/*/Releases/*"
         artifactErrorsFailBuild: true
         commit: ${{ github.ref_name }}
         tag: ${{ steps.nbgv.outputs.SemVer2 }}
+        prerelease: ${{ steps.nbgv.outputs.Prerelease != '' }}
