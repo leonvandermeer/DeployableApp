@@ -60,4 +60,4 @@ jobs:
         artifactErrorsFailBuild: true
         commit: ${{ github.ref_name }}
         tag: ${{ steps.nbgv.outputs.SemVer2 }}
-        prerelease: ${{ steps.nbgv.outputs.Prerelease != '' }}
+        prerelease: ${{ steps.nbgv.outputs.PrereleaseVersion != '' }}
