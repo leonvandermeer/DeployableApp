@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.Build.NoTargets/3.7.0">
+﻿<Project Sdk="Microsoft.Build.NoTargets/3.7.56">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <GeneratePackageOnBuild Condition="'$(_IsPublishing)' == 'true'">True</GeneratePackageOnBuild>
     <Authors>Leon van der Meer</Authors>
     <Company></Company>
@@ -18,8 +18,7 @@
 
   <Target Name="GetMyPackageFiles" AfterTargets="Build">
     <PropertyGroup>
-      <DeployableAppPublishPath Condition="'$(SelfContained)' == 'True'">..\DeployableApp\bin\$(Configuration)\$(TargetFramework)-windows\win-x64\publish</DeployableAppPublishPath>
-      <DeployableAppPublishPath Condition="'$(SelfContained)' != 'True'">..\DeployableApp\bin\$(Configuration)\$(TargetFramework)-windows\publish</DeployableAppPublishPath>
+      <DeployableAppPublishPath>..\DeployableApp\bin\$(Configuration)\$(TargetFramework)-windows\win-x64\publish</DeployableAppPublishPath>
     </PropertyGroup>
 
     <ItemGroup>
@@ -46,7 +45,7 @@
           OverwriteReadOnlyFiles="true"
           />
     <Message Importance="High"
-             Text="SquirrelReleasify -> $([System.IO.Path]::GetFullPath('$(PackageOutputAbsolutePath)\Releases'))"
+             Text="SquirrelReleasify -&gt; $([System.IO.Path]::GetFullPath('$(PackageOutputAbsolutePath)\Releases'))"
              />
   </Target>
 
